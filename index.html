@@ -50,11 +50,19 @@
     .case-menu-card i { font-size: 55px; color: #8a2be2; margin-bottom: 15px; display: block; }
 
     /* ЭКРАН САМОГО КЕЙСА (ДЛЯ ОТКРЫТИЯ) */
+    .case-open-view { display: none; }
+    .case-open-view.active { display: block; }
     .case-open-box { text-align: center; max-width: 550px; margin: 0 auto; }
     .weapon-preview-container { width: 100%; height: 130px; margin: 15px auto; display: flex; align-items: center; justify-content: center; }
     .weapon-preview-img { width: 100%; max-width: 280px; height: auto; display: block; animation: float 3s infinite ease-in-out; }
     @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
     .price-tag { font-size: 1.6rem; color: #f39c12; font-weight: bold; margin-bottom: 25px; text-shadow: 0 0 10px rgba(243,156,18,0.4); }
+
+    /* Список содержимого кейса снизу */
+    .case-contains-title { font-size: 1.2rem; font-weight: bold; margin-top: 30px; margin-bottom: 15px; text-align: left; border-bottom: 1px solid #1f1235; padding-bottom: 8px; color: #a78bfa; }
+    .contains-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
+    .contains-item { background: #0d0d14; border: 1px solid #1f1235; border-radius: 8px; padding: 10px; font-size: 0.75rem; text-align: center; font-weight: bold; }
+    .contains-item img { width: 100px; height: auto; max-height: 45px; object-fit: contain; margin-bottom: 5px; }
 
     /* 🎬 ГОРИЗОНТАЛЬНАЯ РУЛЕТКА В СТИЛЕ CS */
     .roulette-container {
@@ -97,7 +105,7 @@
 
     .leaderboard-list { list-style: none; padding: 0; margin: 0; }
     .leaderboard-item { display: flex; justify-content: space-between; padding: 14px 20px; border-bottom: 1px solid #1f1235; font-size: 1rem; }
-    .leaderboard-item.top-1 { color: #f1c40f; font-weight: bold; }
+    .leaderboard-item.top-1 { color: #f1c40f; font-weight: bold; text-shadow: 0 0 8px rgba(241,196,15,0.4); }
 
     .btn-primary { background-color: #8a2be2 !important; color: #fff !important; border: none; padding: 14px 28px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; font-size: 1.1rem; transition: background-color 0.2s; box-shadow: 0 0 15px rgba(138,43,226,0.3); }
     .btn-primary:hover { background-color: #9d4edd !important; box-shadow: 0 0 20px rgba(138, 43, 226, 0.8) !important; }
@@ -124,7 +132,7 @@
     </div>
   </header>
 
-  <!-- ОКНО ГОРИЗОНТАЛЬНОЙ РУЛЕТКИ (CS STYLE) -->
+  <!-- 🎬 ОКНО ГОРИЗОНТАЛЬНОЙ РУЛЕТКИ (CS STYLE) -->
   <div class="roulette-container" id="roulette-box">
     <div class="roulette-pointer"></div>
     <div class="roulette-wrapper" id="roulette-roll"></div>
@@ -132,27 +140,9 @@
 
   <!-- ОКНО ВЫПАВШЕГО ДРОПА (ПРОДАТЬ ИЛИ ОСТАВИТЬ) -->
   <div class="drop-action-popup" id="popup-box">
-    <h3 style="margin-top:0; color:#fff;">🔥 ПРЕДМЕТ ПОЛУЧЕН:</h3>
+    <h3 style="margin-top:0; color:#fff;">🎉 ПРЕДМЕТ ПОЛУЧЕН:</h3>
     <div id="popup-item-name" style="font-size:1.6rem; font-weight:bold; margin:15px 0;"></div>
     <div class="popup-buttons">
-      <button class="btn-primary" onclick="closePopupAndKeep()">🎒 Убрать на Склад</button>
-      <button class="btn-primary btn-sell" id="popup-sell-btn">💰 Продать скин</button>
-    </div>
-  </div>
-
-  <!-- ВКЛАДКА КЕЙСЫ (ОСНОВНОЙ ЭКРАН) -->
-  <div id="section-menu" class="page-section active">
-    <!-- Под-раздел 1: Главное меню выбора -->
-    <div class="card" id="subview-selector" style="display: block;">
-      <h2>🗃 Доступные оружейные кейсы</h2>
-      <div class="menu-cases-grid">
-        <div class="case-menu-card" onclick="openSingleCasePage('mk14')">
-          <i class="fas fa-box-open"></i>
-          <h3>Ящик Модификаций MK14</h3>
-          <p style="color:#f39c12; font-weight:bold; margin-top:10px;">Цена: 250 Монет</p>
-        </div>
-      </div>
-    </div>
 
 
 
