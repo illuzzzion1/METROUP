@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DmitryDuy Style Cases</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #1a1a24;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #ffb703;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 183, 3, 0.5);
+        }
+        /* Контейнер рулетки */
+        .roulette-wrapper {
+            position: relative;
+            width: 700px;
+            height: 130px;
+            background: #111116;
+            border: 3px solid #2c2c38;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+        /* Центральный маркер (указатель) */
+        .roulette-marker {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: #ffb703;
+            z-index: 10;
+            box-shadow: 0 0 10px #ffb703;
+            transform: translateX(-50%);
+        }
+        /* Лента с предметами */
+        .roulette-tape {
+            display: flex;
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            transition: transform 4s cubic-bezier(0.1, 0.8, 0.1, 1);
+            will-change: transform;
+        }
+        /* Карточка предмета */
+        .item-card {
+            width: 130px;
+            height: 100%;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-right: 1px solid #1c1c24;
+            padding: 10px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: bold;
+            background: linear-gradient(180deg, #23232e 0%, #16161f 100%);
+        }
+        .item-card img {
+            width: 75px;
+            height: 55px;
+            object-fit: contain;
+            margin-bottom: 8px;
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.6));
+        }
+        /* Редкости предметов */
+        .rarity-mil-spec { border-bottom: 4px solid #4b69ff; }
+        .rarity-restricted { border-bottom: 4px solid #8847ff; }
+        .rarity-classified { border-bottom: 4px solid #d32ce6; }
+        .rarity-covert { border-bottom: 4px solid #eb4b4b; }
+        .rarity-special { border-bottom: 4px solid #ffae00; }
+
+        /* Кнопка */
+        .btn-open {
+            background: linear-gradient(135deg, #ffb703 0%, #fb8500 100%);
+            color: #000;
+            border: none;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(251, 133, 0, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-transform: uppercase;
+        }
+        .btn-open:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(251, 133, 0, 0.6);
+        }
+        .btn-open:disabled {
+            background: #444;
+            color: #888;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+        /* Окно выигрыша */
+        .win-announcement {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            height: 30px;
+            color: #ffb703;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>DmitryDuy Case Opener</h1>
+
+    <div class="roulette-wrapper">
+        <div class="roulette-marker"></div>
+        <div class="roulette-tape" id="tape"></div>
+    </div>
+
+    <button class="btn-open" id="openBtn" onclick="spinCase()">Открыть кейс</button>
+    
+    <div class="win-announcement" id="winText"></div>
+
+    <script>
+        // База данных скинов (название, картинка, редкость, шанс от 0 до 1)
+        const itemsDatabase = [
+            { name: "P250 | Валентность", img: "https://steamstatic.com", rarity: "rarity-mil-spec", chance: 0.50 },
+            { name: "Glock-18 | Горелка Бунзена", img: "https://steamstatic.com", rarity: "rarity-mil-spec", chance: 0.25 },
+            { name: "M4A4 | Магний", img: "https://steamstatic.com", rarity: "rarity-restricted", chance: 0.15 },
+            { name: "AK-47 | Ледяной уголь", img: "https://steamstatic.com", rarity: "rarity-classified", chance: 0.07 },
+            { name: "AWP | Неонуар", img: "https://steamstatic.com", rarity: "rarity-covert", chance: 0.025 },
+            { name: "Штык-нож | Градиент", img: "https://steamstatic.com", rarity: "rarity-special", chance: 0.005 }
+        ];
+
+        const CARD_WIDTH = 130; 
+        const TAPE_ITEMS_COUNT = 50; // Сколько всего элементов генерировать для прокрутки
+        const WIN_INDEX = 40;        // Индекс элемента, который окажется под маркером
+
+        const tape = document.getElementById('tape');
+        const openBtn = document.getElementById('openBtn');
+        const winText = document.getElementById('winText');
+
+        // Выбор случайного предмета на основе шансов (метод рулетки)
+        function getRandomItem() {
+            const rand = Math.random();
+            let cumulativeChance = 0;
+            for (const item of itemsDatabase) {
+                cumulativeChance += item.chance;
+                if (rand < cumulativeChance) return item;
+            }
+            return itemsDatabase[0];
+        }
+
+        // Генерация карточки HTML
+        function createItemCard(item) {
+            const card = document.createElement('div');
+            card.className = `item-card ${item.rarity}`;
+            card.innerHTML = `<img src="${item.img}" alt="${item.name}"><div>${item.name}</div>`;
+            return card;
+        }
+
+        function spinCase() {
+            openBtn.disabled = true;
+            winText.innerText = "";
+            tape.style.transition = "none";
+            tape.style.transform = "translateX(0px)";
+            tape.innerHTML = "";
+
+            // Заполняем ленту случайными предметами
+            const generatedItems = [];
+            for (let i = 0; i < TAPE_ITEMS_COUNT; i++) {
+                const item = getRandomItem();
+                generatedItems.push(item);
+                tape.appendChild(createItemCard(item));
+            }
+
+            // Тот самый скин, который выиграет
+            const winningItem = generatedItems[WIN_INDEX];
+
+            // Рассчитываем точную позицию остановки ленты по центру маркера
+            setTimeout(() => {
+                const wrapperWidth = 700;
+                // Смещение: доходим до нужного элемента + центрируем его + добавляем небольшую случайность внутри карточки
+                const randomOffsetWithinCard = Math.floor(Math.random() * (CARD_WIDTH - 20)) + 10;
+                const targetX = (WIN_INDEX * CARD_WIDTH) - (wrapperWidth / 2) + randomOffsetWithinCard;
+
+                tape.style.transition = "transform 4s cubic-bezier(0.1, 0.8, 0.1, 1)";
+                tape.style.transform = `translateX(-${targetX}px)`;
+            }, 50);
+
+            // Вывод результата после окончания анимации
+            setTimeout(() => {
+                winText.innerText = `Вы выиграли: ${winningItem.name}!`;
+                openBtn.disabled = false;
+            }, 4100);
+        }
+
+        // Первичная инициализация ленты при загрузке страницы
+        for (let i = 0; i < 6; i++) {
+            tape.appendChild(createItemCard(itemsDatabase[i % itemsDatabase.length]));
+        }
+    </script>
+</body>
+</html>
