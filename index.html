@@ -35,7 +35,6 @@
   
   .card { background-color: rgba(13, 13, 20, 0.85) !important; padding: 25px; border-radius: 16px; border: 1px solid #1f1235 !important; margin-bottom: 20px; }
   
-  /* ЗОНА КЕЙСА */
   .case-zone-center { display: flex; justify-content: center; margin: 20px 0; }
   .case-card-huge { 
     background: linear-gradient(135deg, #100a26, #05030f); 
@@ -58,7 +57,7 @@
   }
   .case-price-tag { font-size: 1.6rem; color: #f39c12; font-weight: bold; margin: 15px 0; text-shadow: 0 0 10px rgba(243,156,18,0.5); }
 
-  /* 🎬 НАСТОЯЩАЯ ГОРИЗОНТАЛЬНАЯ РУЛЕТКА В СТИЛЕ CS:GO / CS2 */
+  /* ГОРИЗОНТАЛЬНАЯ РУЛЕТКА В СТИЛЕ CS */
   .roulette-container {
     position: relative; width: 100%; background: #0b0818;
     border: 3px solid #8a2be2; border-radius: 14px;
@@ -66,13 +65,11 @@
     box-shadow: 0 0 25px rgba(138, 43, 226, 0.4) inset;
     height: 150px;
   }
-  /* Золотой прицел по центру */
   .roulette-pointer {
     position: absolute; top: 0; left: 50%; transform: translateX(-50%);
     width: 4px; height: 100%; background-color: #f1c40f;
     z-index: 10; box-shadow: 0 0 15px #f1c40f;
   }
-  /* Затемнение краев барабана (кинематографичный эффект как в CS) */
   .roulette-container::before {
     content: ''; position: absolute; top: 0; left: 0; width: 100px; height: 100%;
     background: linear-gradient(to right, #0b0818, transparent); z-index: 5;
@@ -83,7 +80,6 @@
   }
   .roulette-wrapper {
     display: flex; width: max-content; padding: 15px 0;
-    transform: translateX(0px);
   }
   .roulette-item {
     width: 170px; height: 120px; background: linear-gradient(to bottom, #110d24, #080612);
@@ -91,20 +87,16 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     flex-shrink: 0; box-sizing: border-box; text-align: center; padding: 8px;
     border-bottom: 5px solid #fff;
-    transition: background 0.3s;
   }
-  .roulette-item img { width: 130px; height: auto; max-height: 55px; object-fit: contain; margin-bottom: 5px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5)); }
-  .roulette-item span { font-size: 0.75rem; font-weight: bold; line-height: 1.1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; width: 100%; }
+  .roulette-item img { width: 130px; height: auto; max-height: 55px; object-fit: contain; margin-bottom: 5px; }
+  .roulette-item span { font-size: 0.75rem; font-weight: bold; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
 
-  /* Текст победы */
   .win-announce {
-    text-align: center; font-size: 1.8rem; font-weight: bold;
-    margin: 15px 0; display: none;
+    text-align: center; font-size: 1.8rem; font-weight: bold; margin: 15px 0; display: none;
     animation: winPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   }
   @keyframes winPop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-  /* Склад оружия */
   .inventory-box { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 15px; max-height: 350px; overflow-y: auto; }
   .inv-item { 
     background: #0d0d14; border: 2px solid #2d1b4e; padding: 12px 8px; border-radius: 8px; 
@@ -122,7 +114,6 @@
 <div class="bg-lines"><div class="neon-line line-1"></div><div class="neon-line line-2"></div><div class="neon-line line-3"></div><div class="neon-line line-4"></div></div>
 
 <div class="container">
-  <!-- ШАПКА METROUP -->
   <header class="header">
     <h1 class="logo-title">METROUP</h1>
     <div class="balance-box">
@@ -134,13 +125,11 @@
 
   <div class="main-grid">
     <div class="left-column">
-      <!-- 🎬 ГОРИЗОНТАЛЬНЫЙ КЕЙС-БАРАБАН (CS STYLE) -->
       <div class="roulette-container" id="roulette-box">
         <div class="roulette-pointer"></div>
         <div class="roulette-wrapper" id="roulette-roll"></div>
       </div>
 
-      <!-- ТЕКСТ ПОБЕДЫ -->
       <div class="win-announce" id="win-text"></div>
 
       <div class="card">
@@ -150,7 +139,8 @@
         <div class="case-zone-center">
           <div class="case-card-huge">
             <div class="weapon-preview-container">
-              <img class="weapon-preview-img" src="https://postimg.co" alt="MK14">
+              <!-- ССЫЛКА НА КАРТИНКУ ОБНОВЛЕНА НА ЖЕСТКО ВШИТЫЙ ДИЗАЙН -->
+              <img class="weapon-preview-img" src="https://unsplash.com" onerror="this.src='https://unsplash.com'" alt="MK14">
             </div>
             <h3>Ящик Модификаций MK14</h3>
             <p class="case-price-tag">250 Монет 💰</p>
@@ -163,7 +153,7 @@
     <div class="right-column">
       <div class="card">
         <h2>🏆 ТОП-5 Лидеров</h2>
-        <ul class="leaderboard-list" id="leaderboard-root"><li class="leaderboard-item">Загрузка топа...</li></ul>
+        <ul class="leaderboard-list" id="leaderboard-root"><li class="leaderboard-item">Синхронизация...</li></ul>
       </div>
 
       <div class="card">
@@ -177,7 +167,10 @@
 <script>
   const SERVER_URL = 'https://onrender.com';
   
-  let isFirstTime = localStorage.getItem('has_played_v8') === null;
+  // Забираем сохраненный баланс игрока. Если его нет — выдаем 500 стартовых монет
+  let localCoins = parseInt(localStorage.getItem('saved_balance')) || 500;
+  document.getElementById('balance-val').innerText = localCoins;
+
   let currentUser = {
     id: localStorage.getItem('user_id') || Math.floor(Math.random() * 1000000),
     name: localStorage.getItem('user_name') || 'Боец_' + Math.floor(Math.random() * 100)
@@ -185,7 +178,6 @@
   localStorage.setItem('user_id', currentUser.id);
   localStorage.setItem('user_name', currentUser.name);
 
-  // Пул 6 редкостей по вашему ТЗ
   const mk14LootTable = [
     { name: 'Повреждённая MK14', color: '#95a5a6', shadow: 'rgba(149,165,166,0.5)', chance: 45.0 },
     { name: 'Отремонтированная MK14', color: '#2ecc71', shadow: 'rgba(46,204,113,0.5)', chance: 28.0 },
@@ -194,4 +186,6 @@
     { name: 'Высшего качества MK14', color: '#ff7675', shadow: 'rgba(255,118,117,0.5)', chance: 3.2 },
     { name: 'Золотая MK14', color: '#f1c40f', shadow: 'rgba(241,196,15,0.6)', chance: 0.8 }
   ];
+
+  let playerInventory = JSON.parse(localStorage.getItem('player_inv_mk14_v9')) || [];
 
