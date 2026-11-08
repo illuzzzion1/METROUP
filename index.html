@@ -1,60 +1,51 @@
 <!DOCTYPE html>
-<html lang="ru-RU">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>METROUP :: Рабочий симулятор кейсов MK14</title>
-  <link rel="stylesheet" href="https://cloudflare.com">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>METROUP :: Симулятор Кейсов MK14</title>
   <style>
+    /* Базовые стили в золотом и тёмно-сером тонах Case-Battle */
     body {
-      margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif;
-      background-color: #171c25; color: #e2e8f0; overflow-x: hidden; min-height: 100vh;
+      margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif;
+      background-color: #161a23; color: #e2e8f0; overflow-x: hidden; min-height: 100vh;
     }
-    .bg-wrap {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% 30%, #1e2633 0%, #171c25 70%);
-      z-index: -1; pointer-events: none;
-    }
-    .neon-line { position: absolute; width: 2px; height: 150px; background: linear-gradient(to bottom, transparent, #f6a45a, transparent); opacity: 0.2; transform: rotate(45deg); animation: drop linear infinite; }
-    .line-1 { left: 15%; animation-duration: 6s; } .line-2 { left: 45%; animation-duration: 9s; } .line-3 { left: 75%; animation-duration: 7s; } .line-4 { left: 90%; animation-duration: 11s; }
-    @keyframes drop { 0% { top: -200px; } 100% { top: 100%; } }
-    
     .container { max-width: 1100px; margin: 0 auto; padding: 20px; box-sizing: border-box; }
     
     /* Шапка сайта */
     .header {
-      padding: 20px 30px; background: #1b222e; border-radius: 12px; margin-bottom: 25px;
-      border: 1px solid #232c3d; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      background: #1f2432; padding: 20px 30px; border-radius: 12px; margin-bottom: 25px;
+      border: 1px solid #2d3446; box-shadow: 0 4px 20px rgba(0,0,0,0.4);
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
     }
-    .logo-title { margin: 0; font-size: 2.2rem; font-weight: 900; letter-spacing: 1.5px; color: #fff; text-shadow: 0 0 10px rgba(246,164,90,0.3); }
+    .logo-title { margin: 0; font-size: 2.2rem; font-weight: 900; letter-spacing: 2px; color: #f6a45a; text-shadow: 0 0 10px rgba(246,164,90,0.3); }
     
     .balance-box { 
-      background-color: #131821; padding: 12px 24px; border-radius: 10px; 
+      background-color: #161a23; padding: 12px 24px; border-radius: 8px; 
       border: 1px solid #b0681e; font-weight: bold; font-size: 1.2rem; 
-      display: flex; align-items: center; gap: 10px; box-shadow: 0 0 15px rgba(176,104,30,0.4);
+      display: flex; align-items: center; gap: 8px; box-shadow: 0 0 15px rgba(176,104,30,0.2);
     }
 
-    /* Главная сетка в стиле Case-Battle */
-    .main-grid { display: grid; grid-template-columns: 1.8fr 1fr; gap: 20px; }
+    /* Главная сетка */
+    .main-grid { display: grid; grid-template-columns: 1.7fr 1fr; gap: 20px; }
     @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
     
-    .card { background-color: #1b222e; padding: 25px; border-radius: 12px; border: 1px solid #232c3d; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+    .card { background-color: #1f2432; padding: 25px; border-radius: 12px; border: 1px solid #2d3446; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
     
-    /* Главный кейс */
-    .case-card-huge { text-align: center; width: 100%; box-sizing: border-box; }
-    .weapon-preview-container { width: 100%; height: 130px; margin: 15px auto; display: flex; align-items: center; justify-content: center; }
-    .weapon-preview-img { width: 100%; max-width: 280px; height: auto; display: block; animation: float 3s infinite ease-in-out; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)); }
+    /* Стили главного кейса */
+    .case-card-huge { text-align: center; width: 100%; }
+    .weapon-preview-container { width: 100%; height: 110px; margin: 15px auto; display: flex; align-items: center; justify-content: center; }
+    .weapon-svg { width: 260px; height: auto; display: block; animation: float 3s infinite ease-in-out; }
     @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-6px); } 100% { transform: translateY(0px); } }
-    .price-tag { font-size: 1.7rem; color: #f6a45a; font-weight: bold; margin: 15px 0; text-shadow: 0 0 10px rgba(246,164,90,0.3); }
+    .price-tag { font-size: 1.7rem; color: #f6a45a; font-weight: bold; margin: 15px 0; }
 
-    /* Сетка доступных скинов под кейсом */
-    .case-contains-title { font-size: 1.2rem; font-weight: bold; margin-top: 35px; margin-bottom: 15px; text-align: left; border-bottom: 1px solid #232c3d; padding-bottom: 8px; color: #f6a45a; }
+    /* Витрина содержимого */
+    .case-contains-title { font-size: 1.2rem; font-weight: bold; margin-top: 35px; margin-bottom: 15px; text-align: left; border-bottom: 1px solid #2d3446; padding-bottom: 8px; color: #f6a45a; }
     .contains-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
-    .contains-item { background: #131821; border: 1px solid #232c3d; border-radius: 8px; padding: 12px 6px; font-size: 0.72rem; text-align: center; font-weight: bold; border-bottom: 4px solid #fff; }
-    .contains-item img { width: 100px; height: auto; max-height: 40px; object-fit: contain; margin-bottom: 8px; }
+    .contains-item { background: #161a23; border: 1px solid #2d3446; border-radius: 8px; padding: 12px 6px; font-size: 0.75rem; text-align: center; font-weight: bold; border-bottom: 4px solid #fff; }
+    .contains-item svg { width: 100px; height: auto; margin-bottom: 8px; }
 
-    /* 🎬 РУЛЕТКА В СТИЛЕ CS БЕЗ ОСЕЧЕК */
+    /* 🎬 ГОРИЗОНТАЛЬНАЯ РУЛЕТКА CS:GO */
     .roulette-container {
       position: relative; width: 100%; background: #0e1219; border: 2px solid #b0681e; border-radius: 12px;
       margin-bottom: 25px; overflow: hidden; display: none; height: 145px; box-shadow: 0 0 25px rgba(176,104,30,0.3) inset;
@@ -62,47 +53,62 @@
     .roulette-pointer { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 4px; height: 100%; background-color: #f6a45a; z-index: 10; box-shadow: 0 0 15px #f6a45a; }
     .roulette-container::before { content: ''; position: absolute; top: 0; left: 0; width: 140px; height: 100%; background: linear-gradient(to right, #0e1219, transparent); z-index: 5; }
     .roulette-container::after { content: ''; position: absolute; top: 0; right: 0; width: 140px; height: 100%; background: linear-gradient(to left, #0e1219, transparent); z-index: 5; }
-    .roulette-wrapper { display: flex; width: max-content; padding: 12px 0; }
+    .roulette-wrapper { display: flex; width: max-content; padding: 12px 0; transform: translateX(0px); }
     
     .roulette-item {
-      width: 170px; height: 115px; background: linear-gradient(to bottom, #171c25, #11151c); border: 1px solid #232c3d; margin: 0 4px; border-radius: 8px;
+      width: 170px; height: 115px; background: linear-gradient(to bottom, #1f2432, #161a23); border: 1px solid #2d3446; margin: 0 4px; border-radius: 8px;
       display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0; box-sizing: border-box; padding: 5px; border-bottom: 5px solid #fff;
     }
-    .roulette-item img { width: 120px; height: auto; max-height: 55px; object-fit: contain; margin-bottom: 8px; }
+    .roulette-item svg { width: 110px; height: auto; margin-bottom: 8px; }
     .roulette-item span { font-size: 0.72rem; font-weight: bold; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; }
 
-    /* Поп-ап быстрого решения */
+    /* Поп-ап решения */
     .drop-action-popup {
-      background: #131821; border: 2px solid #f6a45a; border-radius: 12px; padding: 25px;
+      background: #161a23; border: 2px solid #f6a45a; border-radius: 12px; padding: 25px;
       text-align: center; margin: 0 auto 25px auto; max-width: 450px; display: none;
       box-shadow: 0 0 35px rgba(176,104,30,0.5); animation: popupShow 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
     @keyframes popupShow { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
     .popup-buttons { display: flex; gap: 12px; margin-top: 20px; }
-    .btn-sell { background-color: #d9534f !important; color: #fff !important; }
-    .btn-sell:hover { background-color: #c9302c !important; box-shadow: 0 0 15px rgba(217,83,79,0.4); }
+    .btn-sell { background: #d9534f !important; color: #fff !important; }
+    .btn-sell:hover { box-shadow: 0 0 15px rgba(217,83,79,0.4); }
 
     /* Инвентарь */
-    .inventory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-top: 15px; max-height: 300px; overflow-y: auto; }
+    .inventory-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-top: 15px; max-height: 320px; overflow-y: auto; }
     .inv-card {
-      background: #131821; border: 2px solid #232c3d; border-radius: 10px; padding: 12px 8px; text-align: center;
+      background: #161a23; border: 2px solid #2d3446; border-radius: 10px; padding: 12px 8px; text-align: center;
       box-shadow: 0 4px 10px rgba(0,0,0,0.4); display: flex; flex-direction: column; justify-content: space-between;
     }
-    .inv-card img { width: 110px; height: auto; max-height: 50px; object-fit: contain; margin: 5px auto; }
+    .inv-card svg { width: 100px; height: auto; margin: 5px auto; }
     .inv-card .sell-price { color: #f6a45a; font-weight: bold; font-size: 0.9rem; margin: 6px 0; }
 
+    /* Таблица топа */
     .leaderboard-list { list-style: none; padding: 0; margin: 0; }
-    .leaderboard-item { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #232c3d; font-size: 0.95rem; }
+    .leaderboard-item { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #2d3446; font-size: 0.95rem; }
     .leaderboard-item.top-1 { color: #f6a45a; font-weight: bold; }
 
     .btn-primary { background: linear-gradient(to bottom, #f6a45a, #b0681e) !important; color: #fff !important; border: none; padding: 14px 28px; font-weight: bold; border-radius: 6px; cursor: pointer; width: 100%; font-size: 1.1rem; box-shadow: 0 3px 10px rgba(0,0,0,0.3); }
-    .btn-primary:disabled { background: #2c3545 !important; color: #666 !important; cursor: not-allowed; box-shadow: none; }
+    .btn-primary:disabled { background: #2d3446 !important; color: #555 !important; cursor: not-allowed; box-shadow: none; }
   </style>
 </head>
 <body>
 
-<div class="bg-wrap"></div>
-<div class="bg-lines"><div class="neon-line line-1"></div><div class="neon-line line-2"></div><div class="neon-line line-3"></div><div class="neon-line line-4"></div></div>
+<!-- ВЕКТОРНЫЙ SVG ШАБЛОН ДЛИННОЙ ВИНТОВКИ MK14 (АВТОНОМНЫЙ, НЕ ТРЕБУЕТ СЕРВЕРОВ) -->
+<svg style="display: none;">
+  <g id="svg-mk14-core">
+    <path d="M 5 25 L 55 25" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+    <rect x="5" y="23" width="6" height="4" fill="currentColor" rx="1"/>
+    <path d="M 14 23 L 16 16 L 20 23 Z" fill="currentColor"/>
+    <path d="M 24 25 L 22 38 L 18 38 M 24 25 L 26 38 L 30 38" stroke="currentColor" stroke-width="2" fill="none"/>
+    <rect x="42" y="20" width="70" height="10" fill="#111" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M 112 17 L 165 17 L 160 32 L 112 31 Z" fill="#1a1a1a" stroke="currentColor" stroke-width="2"/>
+    <path d="M 132 17 L 135 11 L 142 11" stroke="currentColor" stroke-width="2" fill="none"/>
+    <path d="M 154 30 L 144 48 C 142 51, 150 53, 152 50 L 161 30 Z" fill="#111" stroke="currentColor" stroke-width="1.5"/>
+    <path d="M 122 31 L 117 52 C 116 54, 128 55, 130 52 L 134 31 Z" fill="#222" stroke="currentColor" stroke-width="1.8"/>
+    <path d="M 140 31 C 140 37, 148 37, 145 31" stroke="currentColor" stroke-width="1.5" fill="none"/>
+    <path d="M 160 23 L 195 23 L 195 17 L 205 17 L 205 41 L 195 42 L 195 31 L 160 31" stroke="currentColor" stroke-width="2" fill="none"/>
+  </g>
+</svg>
 
 <div class="container">
   <!-- ВЕРХНЯЯ ПАНЕЛЬ -->
@@ -133,15 +139,15 @@
     </div>
   </div>
 
-  <!-- ГЛАВНАЯ СЕТКА ИНТЕРФЕЙСА -->
+  <!-- ГЛАВНЫЙ ИНТЕРФЕЙС ИГРЫ -->
   <div class="main-grid">
     
-    <!-- ЛЕВАЯ КОЛОНКА: КЕЙС -->
+    <!-- ЛЕВАЯ КОЛОНКА -->
     <div class="left-column">
       <div class="card">
         <div class="case-card-huge">
           <div class="weapon-preview-container">
-            <img class="weapon-preview-img" src="https://postimg.co" alt="MK14">
+            <svg class="weapon-svg" viewBox="0 0 210 60" style="color: #8a2be2;"><use href="#svg-mk14-core" /></svg>
           </div>
           <h2>Контейнер Снабжения MK14</h2>
           <p style="color:#94a3b8; font-size:0.95rem; margin-bottom:15px;">6 модификаций качества Metro Royale. Честный возврат (RTP) равен 98%.</p>
@@ -151,6 +157,5 @@
 
         <div class="case-contains-title">Содержимое контейнера:</div>
         <div class="contains-grid">
-          <div class="contains-item" style="border-bottom-color: #f1c40f; color:#f1c40f;"><img src="https://postimg.co" alt="MK14"><div>Золотая MK14</div></div>
-          <div class="contains-item" style="border-bottom-color: #ff7675; color:#ff7675;"><img src="https://postimg.co" alt="MK14"><div>Высшего качества</div></div>
-
+          <div class="contains-item" style="border-bottom-color: #f1c40f; color:#f1c40f;"><svg viewBox="0 0 210 60"><use href="#svg-mk14-core"/></svg><div>Золотая MK14</div></div>
+          <div class="contains-item" style="border-bottom-color: #ff7675; color:#ff7675;"><svg viewBox="0 0 210 60"><use href="#svg-mk14-core"/></svg><div>Высшего качества</div></div>
