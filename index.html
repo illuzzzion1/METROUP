@@ -1,0 +1,177 @@
+<link rel="stylesheet" href="https://cloudflare.com">
+
+<style>
+  body {
+    margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif;
+    background-color: #050508 !important; color: #e2e8f0 !important;
+    position: relative; overflow-x: hidden; min-height: 100vh;
+  }
+  .bg-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+  .neon-line { position: absolute; width: 2px; height: 150px; background: linear-gradient(to bottom, transparent, #8a2be2, transparent); box-shadow: 0 0 15px #8a2be2, 0 0 5px #fff; opacity: 0.3; transform: rotate(45deg); animation: drop linear infinite; }
+  .line-1 { left: 15%; animation-duration: 6s; } .line-2 { left: 45%; animation-duration: 9s; } .line-3 { left: 75%; animation-duration: 7s; } .line-4 { left: 90%; animation-duration: 11s; }
+  @keyframes drop { 0% { top: -200px; } 100% { top: 100%; } }
+  
+  .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+  
+  .header {
+    padding: 20px 30px; background: rgba(13, 13, 20, 0.85) !important; border-radius: 16px; margin-bottom: 30px;
+    border: 1px solid #1f1235 !important; box-shadow: 0 0 20px rgba(138, 43, 226, 0.15) !important;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
+  }
+  .logo-title { margin: 0; font-size: 1.8rem; color: #fff !important; text-shadow: 0 0 10px rgba(138, 43, 226, 0.5) !important; }
+  
+  .balance-box { background-color: #050508; padding: 10px 20px; border-radius: 8px; border: 1px solid #8a2be2; font-weight: bold; font-size: 1.1rem; display: flex; align-items: center; gap: 8px; }
+  .coin-icon { color: #f39c12; }
+
+  .main-grid { display: grid; grid-template-columns: 2.2fr 1fr; gap: 20px; }
+  @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
+  
+  .card { background-color: rgba(13, 13, 20, 0.85) !important; padding: 25px; border-radius: 16px; border: 1px solid #1f1235 !important; margin-bottom: 20px; }
+  
+  .case-zone-center { display: flex; justify-content: center; margin: 20px 0; }
+  .case-card-huge { background: linear-gradient(135deg, #130f26, #07050f); border: 2px solid #8a2be2; box-shadow: 0 0 25px rgba(138, 43, 226, 0.4); border-radius: 16px; padding: 30px; text-align: center; max-width: 400px; width: 100%; }
+  .case-icon-huge { font-size: 70px; margin-bottom: 15px; display: block; animation: pulse 2s infinite alternate; }
+  @keyframes pulse { 0% { transform: scale(1); } 100% { transform: scale(1.06); } }
+  .case-price-tag { font-size: 1.4rem; color: #f39c12; font-weight: bold; margin: 15px 0; }
+
+  .roulette-zone { background: #050508; border: 2px dashed #4c1d95; border-radius: 12px; padding: 25px; margin-bottom: 25px; text-align: center; display: none; }
+  .drop-display { font-size: 1.6rem; font-weight: bold; margin: 15px 0; color: #fff; text-shadow: 0 0 15px rgba(255,255,255,0.4); }
+
+  .leaderboard-list { list-style: none; padding: 0; margin: 15px 0 0 0; }
+  .leaderboard-item { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #1f1235; font-size: 0.95rem; }
+  .leaderboard-item:last-child { border-bottom: none; }
+  .leaderboard-item.top-1 { color: #f39c12; font-weight: bold; }
+
+  .inventory-box { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 8px; margin-top: 15px; max-height: 250px; overflow-y: auto; }
+  .inv-item { background: #0d0d14; border: 1px solid #2d1b4e; padding: 10px; border-radius: 8px; font-size: 0.8rem; font-weight: bold; text-align: center; }
+
+  .btn-primary { background-color: #8a2be2 !important; color: #fff !important; border: none; padding: 14px 28px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; font-size: 1.1rem; }
+  .btn-primary:hover { background-color: #9d4edd !important; box-shadow: 0 0 20px rgba(138, 43, 226, 0.8) !important; }
+</style>
+
+<div class="bg-lines"><div class="neon-line line-1"></div><div class="neon-line line-2"></div><div class="neon-line line-3"></div><div class="neon-line line-4"></div></div>
+
+<div class="container">
+  <header class="header">
+    <h1 class="logo-title">illuzzzion | Metro Royale Награды</h1>
+    <div class="balance-box"><i class="fas fa-coins coin-icon"></i> <span id="balance-val">0</span></div>
+  </header>
+
+  <div class="main-grid">
+    <div class="left-column">
+      <div class="roulette-zone" id="roulette-box">
+        <h3>Вскрытие контейнера Metro Royale...</h3>
+        <div class="drop-display" id="drop-result">❓❓❓</div>
+      </div>
+
+      <div class="card">
+        <h2>📦 Секретный Ящик: Эксклюзив MK14</h2>
+        <p style="color:#94a3b8; font-size: 0.95rem;">Официальный кейс за <strong style="color:#2ecc71;">1.600.000 Метровалюты</strong>. Фармите монеты за онлайн и выбивайте пушки MK14 элитного качества!</p>
+        <div class="case-zone-center">
+          <div class="case-card-huge">
+            <span class="case-icon-huge">🧰</span>
+            <h3>Фирменный Кейс MK14</h3>
+            <p class="case-price-tag">2,500 Монет 💰</p>
+            <button class="btn-primary" onclick="openMk14Case()">Открыть ящик</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-column">
+      <div class="card">
+        <h2>🏆 ТОП-5 Лидеров Месяца</h2>
+        <ul class="leaderboard-list" id="leaderboard-root"><li class="leaderboard-item">Загрузка топа...</li></ul>
+      </div>
+
+      <div class="card">
+        <h2>🎒 Склад Оружия (MK14)</h2>
+        <div class="inventory-box" id="inventory-root"><span style="color:#64748b; font-size:0.9rem; grid-column:1/-1; text-align:center;">Склад пуст...</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const SERVER_URL = 'https://onrender.com';
+  let currentUser = {
+    id: localStorage.getItem('user_id') || Math.floor(Math.random() * 1000000),
+    name: localStorage.getItem('user_name') || 'Боец_' + Math.floor(Math.random() * 100)
+  };
+  localStorage.setItem('user_id', currentUser.id);
+  localStorage.setItem('user_name', currentUser.name);
+
+  const mk14LootTable = [
+    { name: 'MK14 (Улучшенная)', color: '#3498db', chance: 50 },
+    { name: 'MK14 (Стальная)', color: '#9b59b6', chance: 30 },
+    { name: 'MK14 (Винтовка Кобры)', color: '#e67e22', chance: 15 },
+    { name: 'MK14 (Высшее Качество)', color: '#f1c40f', chance: 5 }
+  ];
+
+  let localCoins = 0;
+  let playerInventory = JSON.parse(localStorage.getItem('player_inv_mk14')) || [];
+
+  function renderInventory() {
+    const root = document.getElementById('inventory-root');
+    if (playerInventory.length === 0) return;
+    root.innerHTML = '';
+    playerInventory.forEach(item => {
+      const div = document.createElement('div');
+      div.className = 'inv-item'; div.style.borderColor = item.color; div.style.color = item.color; div.innerText = item.name;
+      root.appendChild(div);
+    });
+  }
+  renderInventory();
+
+  function openMk14Case() {
+    const casePrice = 2500;
+    if (localCoins < casePrice) { alert('Недостаточно монет!'); return; }
+    localCoins -= casePrice;
+    document.getElementById('balance-val').innerText = localCoins;
+
+    const box = document.getElementById('roulette-box');
+    const res = document.getElementById('drop-result');
+    box.style.display = 'block'; res.innerText = '⚡ Сканирование ящика...'; res.style.color = '#fff';
+
+    setTimeout(() => {
+      const roll = Math.random() * 100;
+      let selectedItem = mk14LootTable; let currentChance = 0;
+      for (let i = 0; i < mk14LootTable.length; i++) {
+        currentChance += mk14LootTable[i].chance;
+        if (roll <= currentChance) { selectedItem = mk14LootTable[i]; break; }
+      }
+      res.innerText = `🛠 НАЙДЕНО: ${selectedItem.name}!`; res.style.color = selectedItem.color;
+      playerInventory.unshift(selectedItem);
+      localStorage.setItem('player_inv_mk14', JSON.stringify(playerInventory));
+      renderInventory();
+    }, 1200);
+  }
+
+  async function sendHeartbeat() {
+    try {
+      const response = await fetch(`${SERVER_URL}/api/add-coins`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ telegram_id: currentUser.id, username: currentUser.name })
+      });
+      const data = await response.json();
+      if (data && data.coins !== undefined) { localCoins = data.coins; document.getElementById('balance-val').innerText = localCoins; }
+    } catch (e) { console.log('Подключение...'); }
+  }
+
+  async function updateLeaderboard() {
+    try {
+      const response = await fetch(`${SERVER_URL}/api/leaderboard`);
+      const topUsers = await response.json();
+      const root = document.getElementById('leaderboard-root'); root.innerHTML = '';
+      topUsers.forEach((user, index) => {
+        const li = document.createElement('li'); li.className = `leaderboard-item ${index === 0 ? 'top-1' : ''}`;
+        li.innerHTML = `<span>${index + 1}. ${user.username}</span> <span>${user.coins} 💰</span>`;
+        root.appendChild(li);
+      });
+    } catch (e) { console.log('Ошибка топа'); }
+  }
+
+  setInterval(sendHeartbeat, 5000); setInterval(updateLeaderboard, 10000);
+  sendHeartbeat(); updateLeaderboard();
+</script>
