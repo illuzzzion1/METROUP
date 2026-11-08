@@ -1,119 +1,132 @@
-<!-- ПОДКЛЮЧЕНИЕ СТИЛЕЙ И ИКОНОК -->
-<link rel="stylesheet" href="https://cloudflare.com">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>METROUP</title>
+  <!-- ПОДКЛЮЧЕНИЕ СТИЛЕЙ И ИКОНОК -->
+  <link rel="stylesheet" href="https://cloudflare.com">
+  <style>
+    body {
+      margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif;
+      background-color: #050508 !important; color: #e2e8f0 !important;
+      position: relative; overflow-x: hidden; min-height: 100vh;
+    }
+    .bg-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+    .neon-line { position: absolute; width: 2px; height: 150px; background: linear-gradient(to bottom, transparent, #8a2be2, transparent); box-shadow: 0 0 15px #8a2be2, 0 0 5px #fff; opacity: 0.3; transform: rotate(45deg); animation: drop linear infinite; }
+    .line-1 { left: 15%; animation-duration: 6s; } .line-2 { left: 45%; animation-duration: 9s; } .line-3 { left: 75%; animation-duration: 7s; } .line-4 { left: 90%; animation-duration: 11s; }
+    @keyframes drop { 0% { top: -200px; } 100% { top: 100%; } }
+    
+    .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
+    
+    .header {
+      padding: 20px 30px; background: rgba(13, 13, 20, 0.85) !important; border-radius: 16px; margin-bottom: 30px;
+      border: 1px solid #1f1235 !important; box-shadow: 0 0 20px rgba(138, 43, 226, 0.15) !important;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
+      backdrop-filter: blur(5px);
+    }
+    .logo-title { margin: 0; font-size: 2.2rem; font-weight: 900; letter-spacing: 2px; color: #fff !important; text-shadow: 0 0 15px rgba(138, 43, 226, 0.8); }
+    
+    .balance-box { 
+      background-color: #050508; padding: 12px 24px; border-radius: 10px; 
+      border: 1px solid #8a2be2; font-weight: bold; font-size: 1.2rem; 
+      display: flex; align-items: center; gap: 10px;
+      box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
+    }
+    .coin-icon { color: #f39c12; }
 
-<style>
-  body {
-    margin: 0; padding: 0; font-family: 'Segoe UI', Roboto, sans-serif;
-    background-color: #050508 !important; color: #e2e8f0 !important;
-    position: relative; overflow-x: hidden; min-height: 100vh;
-  }
-  .bg-lines { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
-  .neon-line { position: absolute; width: 2px; height: 150px; background: linear-gradient(to bottom, transparent, #8a2be2, transparent); box-shadow: 0 0 15px #8a2be2, 0 0 5px #fff; opacity: 0.3; transform: rotate(45deg); animation: drop linear infinite; }
-  .line-1 { left: 15%; animation-duration: 6s; } .line-2 { left: 45%; animation-duration: 9s; } .line-3 { left: 75%; animation-duration: 7s; } .line-4 { left: 90%; animation-duration: 11s; }
-  @keyframes drop { 0% { top: -200px; } 100% { top: 100%; } }
-  
-  .container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-  
-  .header {
-    padding: 20px 30px; background: rgba(13, 13, 20, 0.85) !important; border-radius: 16px; margin-bottom: 30px;
-    border: 1px solid #1f1235 !important; box-shadow: 0 0 20px rgba(138, 43, 226, 0.15) !important;
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
-    backdrop-filter: blur(5px);
-  }
-  .logo-title { margin: 0; font-size: 2.2rem; font-weight: 900; letter-spacing: 2px; color: #fff !important; text-shadow: 0 0 15px rgba(138, 43, 226, 0.8); }
-  
-  .balance-box { 
-    background-color: #050508; padding: 12px 24px; border-radius: 10px; 
-    border: 1px solid #8a2be2; font-weight: bold; font-size: 1.2rem; 
-    display: flex; align-items: center; gap: 10px;
-    box-shadow: 0 0 15px rgba(138, 43, 226, 0.4);
-  }
-  .coin-icon { color: #f39c12; }
+    .main-grid { display: grid; grid-template-columns: 2.2fr 1fr; gap: 20px; }
+    @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
+    
+    .card { background-color: rgba(13, 13, 20, 0.85) !important; padding: 25px; border-radius: 16px; border: 1px solid #1f1235 !important; margin-bottom: 20px; }
+    
+    .case-zone-center { display: flex; justify-content: center; margin: 20px 0; }
+    .case-card-huge { 
+      background: linear-gradient(135deg, #100a26, #05030f); 
+      border: 2px solid #8a2be2; box-shadow: 0 0 30px rgba(138, 43, 226, 0.5); 
+      border-radius: 16px; padding: 30px; text-align: center; max-width: 420px; width: 100%; 
+    }
+    
+    .weapon-preview-container {
+      width: 100%; max-width: 320px; height: 140px; margin: 15px auto;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .weapon-main-icon {
+      font-size: 80px; color: #8a2be2;
+      filter: drop-shadow(0 0 15px rgba(138, 43, 226, 0.8));
+      animation: float 3s infinite ease-in-out;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-8px); }
+      100% { transform: translateY(0px); }
+    }
+    .case-price-tag { font-size: 1.6rem; color: #f39c12; font-weight: bold; margin: 15px 0; text-shadow: 0 0 10px rgba(243,156,18,0.5); }
 
-  .main-grid { display: grid; grid-template-columns: 2.2fr 1fr; gap: 20px; }
-  @media (max-width: 768px) { .main-grid { grid-template-columns: 1fr; } }
-  
-  .card { background-color: rgba(13, 13, 20, 0.85) !important; padding: 25px; border-radius: 16px; border: 1px solid #1f1235 !important; margin-bottom: 20px; }
-  
-  .case-zone-center { display: flex; justify-content: center; margin: 20px 0; }
-  .case-card-huge { 
-    background: linear-gradient(135deg, #100a26, #05030f); 
-    border: 2px solid #8a2be2; box-shadow: 0 0 30px rgba(138, 43, 226, 0.5); 
-    border-radius: 16px; padding: 30px; text-align: center; max-width: 420px; width: 100%; 
-  }
-  
-  .weapon-preview-container {
-    width: 100%; max-width: 320px; height: 140px; margin: 15px auto;
-    display: flex; align-items: center; justify-content: center;
-  }
-  .weapon-preview-img {
-    width: 100%; height: auto; max-height: 120px; object-fit: contain; display: block;
-    animation: float 3s infinite ease-in-out;
-  }
-  @keyframes float {
-    0% { transform: translateY(0px) rotate(0deg); filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.4)); }
-    50% { transform: translateY(-8px) rotate(-1deg); filter: drop-shadow(0 0 20px rgba(138, 43, 226, 0.7)); }
-    100% { transform: translateY(0px) rotate(0deg); filter: drop-shadow(0 0 5px rgba(138, 43, 226, 0.4)); }
-  }
-  .case-price-tag { font-size: 1.6rem; color: #f39c12; font-weight: bold; margin: 15px 0; text-shadow: 0 0 10px rgba(243,156,18,0.5); }
+    /* ГОРИЗОНТАЛЬНАЯ РУЛЕТКА В СТИЛЕ CS */
+    .roulette-container {
+      position: relative; width: 100%; background: #0b0818;
+      border: 3px solid #8a2be2; border-radius: 14px;
+      margin-bottom: 25px; overflow: hidden; display: none;
+      box-shadow: 0 0 25px rgba(138, 43, 226, 0.4) inset;
+      height: 150px;
+    }
+    .roulette-pointer {
+      position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+      width: 4px; height: 100%; background-color: #f1c40f;
+      z-index: 10; box-shadow: 0 0 15px #f1c40f;
+    }
+    .roulette-container::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100px; height: 100%;
+      background: linear-gradient(to right, #0b0818, transparent); z-index: 5;
+    }
+    .roulette-container::after {
+      content: ''; position: absolute; top: 0; right: 0; width: 100px; height: 100%;
+      background: linear-gradient(to left, #0b0818, transparent); z-index: 5;
+    }
+    .roulette-wrapper {
+      display: flex; width: max-content; padding: 15px 0;
+    }
+    .roulette-item {
+      width: 170px; height: 120px; background: linear-gradient(to bottom, #110d24, #080612);
+      border: 1px solid #23184a; margin: 0 4px; border-radius: 8px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      flex-shrink: 0; box-sizing: border-box; text-align: center; padding: 8px;
+      border-bottom: 5px solid #fff;
+    }
+    .roulette-item i { font-size: 40px; margin-bottom: 8px; }
+    .roulette-item span { font-size: 0.75rem; font-weight: bold; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
 
-  /* ГОРИЗОНТАЛЬНАЯ РУЛЕТКА В СТИЛЕ CS */
-  .roulette-container {
-    position: relative; width: 100%; background: #0b0818;
-    border: 3px solid #8a2be2; border-radius: 14px;
-    margin-bottom: 25px; overflow: hidden; display: none;
-    box-shadow: 0 0 25px rgba(138, 43, 226, 0.4) inset;
-    height: 150px;
-  }
-  .roulette-pointer {
-    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-    width: 4px; height: 100%; background-color: #f1c40f;
-    z-index: 10; box-shadow: 0 0 15px #f1c40f;
-  }
-  .roulette-container::before {
-    content: ''; position: absolute; top: 0; left: 0; width: 100px; height: 100%;
-    background: linear-gradient(to right, #0b0818, transparent); z-index: 5;
-  }
-  .roulette-container::after {
-    content: ''; position: absolute; top: 0; right: 0; width: 100px; height: 100%;
-    background: linear-gradient(to left, #0b0818, transparent); z-index: 5;
-  }
-  .roulette-wrapper {
-    display: flex; width: max-content; padding: 15px 0;
-  }
-  .roulette-item {
-    width: 170px; height: 120px; background: linear-gradient(to bottom, #110d24, #080612);
-    border: 1px solid #23184a; margin: 0 4px; border-radius: 8px;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    flex-shrink: 0; box-sizing: border-box; text-align: center; padding: 8px;
-    border-bottom: 5px solid #fff;
-  }
-  .roulette-item img { width: 130px; height: auto; max-height: 55px; object-fit: contain; margin-bottom: 5px; }
-  .roulette-item span { font-size: 0.75rem; font-weight: bold; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+    .win-announce {
+      text-align: center; font-size: 1.8rem; font-weight: bold; margin: 15px 0; display: none;
+      animation: winPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    @keyframes winPop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-  .win-announce {
-    text-align: center; font-size: 1.8rem; font-weight: bold; margin: 15px 0; display: none;
-    animation: winPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
-  @keyframes winPop { 0% { transform: scale(0.6); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+    .inventory-box { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 15px; max-height: 350px; overflow-y: auto; }
+    .inv-item { 
+      background: #0d0d14; border: 2px solid #2d1b4e; padding: 12px 8px; border-radius: 8px; 
+      font-size: 0.8rem; font-weight: bold; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.6);
+    }
+    
+    .leaderboard-list { list-style: none; padding: 0; margin: 15px 0 0 0; }
+    .leaderboard-item { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #1f1235; font-size: 0.95rem; }
+    .leaderboard-item:last-child { border-bottom: none; }
+    .leaderboard-item.top-1 { color: #f1c40f; font-weight: bold; }
 
-  .inventory-box { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; margin-top: 15px; max-height: 350px; overflow-y: auto; }
-  .inv-item { 
-    background: #0d0d14; border: 2px solid #2d1b4e; padding: 12px 8px; border-radius: 8px; 
-    font-size: 0.8rem; font-weight: bold; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.6);
-  }
-  .leaderboard-list { list-style: none; padding: 0; margin: 15px 0 0 0; }
-  .leaderboard-item { display: flex; justify-content: space-between; padding: 12px 15px; border-bottom: 1px solid #1f1235; font-size: 0.95rem; }
-  .leaderboard-item:last-child { border-bottom: none; }
-  .leaderboard-item.top-1 { color: #f1c40f; font-weight: bold; text-shadow: 0 0 8px rgba(241,196,15,0.4); }
-
-  .btn-primary { background-color: #8a2be2 !important; color: #fff !important; border: none; padding: 14px 28px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; font-size: 1.1rem; box-shadow: 0 0 10px rgba(138,43,226,0.3); }
-  .btn-primary:hover { background-color: #9d4edd !important; box-shadow: 0 0 20px rgba(138, 43, 226, 0.8) !important; }
-</style>
+    .btn-primary { background-color: #8a2be2 !important; color: #fff !important; border: none; padding: 14px 28px; font-weight: bold; border-radius: 8px; cursor: pointer; width: 100%; font-size: 1.1rem; box-shadow: 0 0 10px rgba(138,43,226,0.3); }
+    .btn-primary:hover { background-color: #9d4edd !important; box-shadow: 0 0 20px rgba(138, 43, 226, 0.8) !important; }
+    .social-links { display: flex; gap: 10px; margin-top: 15px; justify-content: center; }
+    .btn-secondary { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; padding: 10px 20px; border-radius: 8px; font-size: 0.9rem; font-weight: bold; color: #fff; }
+    .btn-youtube { background-color: #ff0000; } .btn-telegram { background-color: #24a1de; }
+  </style>
+</head>
+<body>
 
 <div class="bg-lines"><div class="neon-line line-1"></div><div class="neon-line line-2"></div><div class="neon-line line-3"></div><div class="neon-line line-4"></div></div>
 
 <div class="container">
+  <!-- ШАПКА METROUP -->
   <header class="header">
     <h1 class="logo-title">METROUP</h1>
     <div class="balance-box">
@@ -124,23 +137,26 @@
   </header>
 
   <div class="main-grid">
+    <!-- ЛЕВАЯ КОЛОНКА -->
     <div class="left-column">
+      <!-- 🎬 РУЛЕТКА -->
       <div class="roulette-container" id="roulette-box">
         <div class="roulette-pointer"></div>
         <div class="roulette-wrapper" id="roulette-roll"></div>
       </div>
 
+      <!-- ТЕКСТ ПОБЕДЫ -->
       <div class="win-announce" id="win-text"></div>
 
       <div class="card">
         <h2>🧰 Контейнер Снабжения MK14</h2>
-        <p style="color:#94a3b8; font-size: 0.95rem;">Фирменный кейс. Испытайте свою удачу и выбивайте 6 категорий качества оригинальной винтовки MK14 Metro Royale! Плавная прокрутка барабана, RTP равен 98%.</p>
+        <p style="color:#94a3b8; font-size: 0.95rem;">Фирменный кейс. Получайте +5 монет каждые 5 секунд просто за нахождение на сайте! Испытайте свою удачу и выбивайте 6 категорий качества оригинальной винтовки MK14 Metro Royale. RTP равен 98%.</p>
         
         <div class="case-zone-center">
           <div class="case-card-huge">
             <div class="weapon-preview-container">
-              <!-- ССЫЛКА НА КАРТИНКУ ОБНОВЛЕНА НА ЖЕСТКО ВШИТЫЙ ДИЗАЙН -->
-              <img class="weapon-preview-img" src="https://unsplash.com" onerror="this.src='https://unsplash.com'" alt="MK14">
+              <!-- Надежная векторная геймерская иконка оружия вместо багующих ссылок -->
+              <i class="fas fa-crosshairs weapon-main-icon"></i>
             </div>
             <h3>Ящик Модификаций MK14</h3>
             <p class="case-price-tag">250 Монет 💰</p>
@@ -150,42 +166,25 @@
       </div>
     </div>
 
+    <!-- ПРАВАЯ КОЛОНКА -->
     <div class="right-column">
       <div class="card">
-        <h2>🏆 ТОП-5 Лидеров</h2>
-        <ul class="leaderboard-list" id="leaderboard-root"><li class="leaderboard-item">Синхронизация...</li></ul>
+        <h2>🏆 ТОП-5 Лидеров Сезона</h2>
+        <ul class="leaderboard-list" id="leaderboard-root">
+          <li class="leaderboard-item" style="color: #f1c40f;">1. illuzzzion <span>99,540 💰</span></li>
+          <li class="leaderboard-item">2. Skif_Metro <span>42,100 💰</span></li>
+          <li class="leaderboard-item">3. Dark_PUBG <span>31,550 💰</span></li>
+          <li class="leaderboard-item">4. MetroLover <span>18,900 💰</span></li>
+          <li class="leaderboard-item">5. ZeroShot <span>12,400 💰</span></li>
+        </ul>
       </div>
 
       <div class="card">
         <h2>🎒 Военный Склад (MK14)</h2>
         <div class="inventory-box" id="inventory-root"><span style="color:#64748b; font-size:0.9rem; grid-column:1/-1; text-align: center;">Склад пуст...</span></div>
+        <a href="https://t.me" target="_blank" class="btn-primary" style="display:block; text-align:center; text-decoration:none; margin-top:15px; font-size:0.9rem; background-color:#24a1de !important;">🚀 Отправить скриншот в Топ</a>
       </div>
-    </div>
-  </div>
-</div>
 
-<script>
-  const SERVER_URL = 'https://onrender.com';
-  
-  // Забираем сохраненный баланс игрока. Если его нет — выдаем 500 стартовых монет
-  let localCoins = parseInt(localStorage.getItem('saved_balance')) || 500;
-  document.getElementById('balance-val').innerText = localCoins;
-
-  let currentUser = {
-    id: localStorage.getItem('user_id') || Math.floor(Math.random() * 1000000),
-    name: localStorage.getItem('user_name') || 'Боец_' + Math.floor(Math.random() * 100)
-  };
-  localStorage.setItem('user_id', currentUser.id);
-  localStorage.setItem('user_name', currentUser.name);
-
-  const mk14LootTable = [
-    { name: 'Повреждённая MK14', color: '#95a5a6', shadow: 'rgba(149,165,166,0.5)', chance: 45.0 },
-    { name: 'Отремонтированная MK14', color: '#2ecc71', shadow: 'rgba(46,204,113,0.5)', chance: 28.0 },
-    { name: 'Целая MK14', color: '#3498db', shadow: 'rgba(52,152,219,0.5)', chance: 15.0 },
-    { name: 'Улучшенная MK14', color: '#9b59b6', shadow: 'rgba(155,89,182,0.5)', chance: 8.0 },
-    { name: 'Высшего качества MK14', color: '#ff7675', shadow: 'rgba(255,118,117,0.5)', chance: 3.2 },
-    { name: 'Золотая MK14', color: '#f1c40f', shadow: 'rgba(241,196,15,0.6)', chance: 0.8 }
-  ];
-
-  let playerInventory = JSON.parse(localStorage.getItem('player_inv_mk14_v9')) || [];
-
+      <div class="card" style="text-align:center;">
+        <h2>Мои каналы</h2>
+        <div class="social-links">
